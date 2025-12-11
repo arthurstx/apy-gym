@@ -1,0 +1,32 @@
+{
+  "name": "api-gym",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src --format esm"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/node": "^24.10.2",
+    "eslint": "9.39.1",
+    "globals": "16.5.0",
+    "jiti": "2.6.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "8.49.0"
+  },
+  "dependencies": {
+    "dotenv": "17.2.3",
+    "fastify": "^5.6.2",
+    "zod": "4.1.13"
+  }
+}
