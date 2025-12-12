@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src --format esm"
+    "build": "tsup src --format esm",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
     "@eslint/js": "9.39.1",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "^24.10.2",
+    "@vitest/coverage-v8": "4.0.15",
     "eslint": "9.39.1",
     "globals": "16.5.0",
     "jiti": "2.6.1",
@@ -24,7 +27,8 @@
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "8.49.0"
+    "typescript-eslint": "8.49.0",
+    "vitest": "4.0.15"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.1.0",
