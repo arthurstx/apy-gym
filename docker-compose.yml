@@ -1,8 +1,6 @@
-version: '3.9'
-
 services:
   api-gym:
-    image: bitnami/postgresql:18.1.0
+    image: bitnami/postgresql
     container_name: api-gym
     ports:
       - '5432:5432'

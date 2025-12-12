@@ -1,11 +1,15 @@
 import { app } from './app.js'
 import { env } from './env/index.js'
 
-app
-  .listen({
-    host: '0.0.0.0',
-    port: env.PORT,
-  })
-  .then(() => {
-    console.log('✅ http server run')
-  })
+try {
+  app
+    .listen({
+      host: '0.0.0.0',
+      port: env.PORT,
+    })
+    .then(() => {
+      console.log('✅ http server run')
+    })
+} catch (err) {
+  console.log(err)
+}
