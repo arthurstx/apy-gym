@@ -1,37 +1,37 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemoryUsersRepository } from '../repositories/in-memory/in-memory-users-repository.js'
-import { AuthenticateUseCase } from './authenticate.js'
 import { hash } from 'bcryptjs'
-import { InvalidCredentialsError } from './errors/invalid-credentials-error.js'
+import { GetUserPorfileUseCase } from './get-user-porfile.js'
+import { ResourceNotFound } from './errors/resource-not-found-error.js'
 
 let usersRepository: InMemoryUsersRepository
-let sut: AuthenticateUseCase
+let sut: GetUserPorfileUseCase
 
-describe('Authenticate use case', () => {
+describe('Get user porfile use case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
-    sut = new AuthenticateUseCase(usersRepository)
+    sut = new GetUserPorfileUseCase(usersRepository)
   })
 
-  it('Should be able to authenticate', async () => {
+  it('Should be able to get user porfile', async () => {
     const email = 'johndoe@example.com'
     const password = '123456'
 
-    await usersRepository.create({
+    const createdUser = await usersRepository.create({
       name: 'john doe',
       email,
       password_hash: await hash(password, 6),
     })
 
     const { user } = await sut.execute({
-      email,
-      password,
+      userId: createdUser.id,
     })
 
     expect(user.id).toEqual(expect.any(String))
+    expect(user.name).toEqual('john doe')
   })
 
-  it('Should be able to authenticate with wrong password', async () => {
+  it('Should not be able to get user porfile with wrong id', async () => {
     const email = 'johndoe@example.com'
 
     await usersRepository.create({
@@ -42,18 +42,8 @@ describe('Authenticate use case', () => {
 
     await expect(
       sut.execute({
-        email,
-        password: '654321',
+        userId: 'non-existing-id',
       })
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
-  })
-
-  it('Should not be able to authenticate with wrong email', async () => {
-    await expect(
-      sut.execute({
-        email: 'johndoe@example.com',
-        password: '123456',
-      })
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    ).rejects.toBeInstanceOf(ResourceNotFound)
   })
 })
