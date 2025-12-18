@@ -6,6 +6,10 @@ import dayjs from 'dayjs'
 export class InMemoryCheckInsRepository implements CheckInsRepository {
   public items: CheckIn[] = []
 
+  async countByUserId(userId: string) {
+    return this.items.filter((item) => userId === item.userId).length
+  }
+
   async create(data: Prisma.CheckInUncheckedCreateInput) {
     const checkIn = {
       id: randomUUID(),
