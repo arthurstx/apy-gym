@@ -40,7 +40,7 @@ describe('Search gyms use case', () => {
       expect.objectContaining({ title: 'ts gym' }),
     ])
   })
-  it('Should be able to search gyms', async () => {
+  it('Should be able to search pagineted gyms', async () => {
     for (let i = 0; i <= 21; i++) {
       await gymsRepository.create({
         id: `gym-${i}`,
