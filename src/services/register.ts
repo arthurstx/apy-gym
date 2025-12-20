@@ -7,6 +7,7 @@ interface RegisterUseCaseRequest {
   email: string
   password: string
 }
+
 export class RegisterUseCase {
   constructor(private usersRepository: UsersRepository) {}
 

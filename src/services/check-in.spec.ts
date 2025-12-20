@@ -81,7 +81,7 @@ describe('Check-in use case', () => {
     expect(checkIn.id).toEqual(expect.any(String))
   })
   it('Should not be able to check in on distant gym', async () => {
-    expect(
+    await expect(
       sut.execute({
         gymId: 'gym-01',
         userId: 'user-01',
