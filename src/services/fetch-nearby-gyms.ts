@@ -10,14 +10,14 @@ interface FeatchNearbyUseCaseResponse {
   gyms: Gym[]
 }
 
-export class FeatchNearbyUseCase {
-  constructor(private checkInRepository: GymsRepository) {}
+export class FetchNearbyUseCase {
+  constructor(private gymsRepository: GymsRepository) {}
 
   async execute({
     userLatitude,
     userLongitude,
   }: FeatchNearbyUseCaseRequest): Promise<FeatchNearbyUseCaseResponse> {
-    const gyms = await this.checkInRepository.findManyNearby({
+    const gyms = await this.gymsRepository.findManyNearby({
       latitude: userLatitude,
       longitude: userLongitude,
     })
