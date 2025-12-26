@@ -2,7 +2,7 @@ import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { app } from '../../../app.js'
 
-describe('Search gyms (e2e)', () => {
+describe('Fetch nearby gyms (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -11,7 +11,7 @@ describe('Search gyms (e2e)', () => {
     await app.close
   })
 
-  it('should be able to search gyms', async () => {
+  it('should be able to fetch nearby gyms', async () => {
     const email = 'email11@example.com'
     const password = '123456'
 
@@ -51,14 +51,14 @@ describe('Search gyms (e2e)', () => {
       })
 
     const response = await request(app.server)
-      .post('/search-gyms')
+      .post('/nearby-gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        query: 'js gym',
-        page: 1,
+        latitude: 0,
+        longitude: 0,
       })
 
-    console.log('===console search gyms===')
+    console.log('====console====')
     console.log(response.body.gyms)
 
     expect(response.statusCode).toEqual(200)

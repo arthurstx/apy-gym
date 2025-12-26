@@ -34,19 +34,32 @@ export class PrismaGymsRepository implements GymsRepository {
     return gyms
   }
   async findManyNearby({ latitude, longitude }: FindManyNearbyParams) {
-    const gyms = await prisma.$queryRaw<Gym[]>`
-    SELECT *
-    FROM gyms
-    WHERE (
-      6371 * acos(
-        cos(radians(${latitude})) *
-        cos(radians(latitude)) *
-        cos(radians(longitude) - radians(${longitude})) +
-        sin(radians(${latitude})) *
-        sin(radians(latitude))
-      )
-    ) <= 10
-  `
+    const url = new URL(process.env.DATABASE_URL!)
+    const schema = url.searchParams.get('schema')
+
+    if (!schema) {
+      throw new Error('Schema not found in DATABASE_URL')
+    }
+
+    const result = await prisma.$transaction([
+      prisma.$executeRawUnsafe(`SET search_path TO "${schema}";`),
+      prisma.$queryRaw<Gym[]>`
+        SELECT *
+        FROM gyms
+        WHERE (
+          6371 * acos(
+            cos(radians(${latitude})) *
+            cos(radians(latitude)) *
+            cos(radians(longitude) - radians(${longitude})) +
+            sin(radians(${latitude})) *
+            sin(radians(latitude))
+          )
+        ) <= 10
+      `,
+    ])
+
+    const gyms = result[1] as Gym[]
+
     return gyms
   }
 }
