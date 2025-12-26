@@ -16,7 +16,7 @@ describe('Fetch nearby gyms (e2e)', () => {
     const { token } = await createAndAuthenticateUser(app)
 
     await request(app.server)
-      .post('/create-gyms')
+      .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'js gym-1',
@@ -27,7 +27,7 @@ describe('Fetch nearby gyms (e2e)', () => {
       })
 
     await request(app.server)
-      .post('/create-gyms')
+      .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'js gym-2',
@@ -38,12 +38,16 @@ describe('Fetch nearby gyms (e2e)', () => {
       })
 
     const response = await request(app.server)
-      .post('/nearby-gyms')
+      .get('/gyms/nearby')
       .set('Authorization', `Bearer ${token}`)
-      .send({
+      .query({
         latitude: 0,
         longitude: 0,
       })
+      .send()
+
+
+
     expect(response.statusCode).toEqual(200)
     expect(response.body.gyms).toHaveLength(2)
     expect(response.body.gyms).toEqual(
