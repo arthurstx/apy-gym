@@ -5,7 +5,7 @@ export async function porfile(request: FastifyRequest, reply: FastifyReply) {
   const getUserPorfile = makeGetUserProfileUseCase()
 
   const { user } = await getUserPorfile.execute({
-    userId: request.user.sub.toString(),
+    userId: request.user.sub,
   })
 
   return reply.status(200).send({ user: { ...user, password_hash: undefined } })
