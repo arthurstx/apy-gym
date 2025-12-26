@@ -38,9 +38,7 @@ describe('Create Gyms (e2e)', () => {
         latitude: 0,
         longitude: 0,
       })
-    console.log('====console====')
-    console.log(response.body)
 
-    expect(response.statusCode).toEqual(200)
+    expect(response.statusCode).toEqual(201)
   })
 })

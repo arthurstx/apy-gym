@@ -28,5 +28,5 @@ export async function CreateGyms(request: FastifyRequest, reply: FastifyReply) {
     title,
   })
 
-  return reply.status(200).send()
+  return reply.status(201).send()
 }

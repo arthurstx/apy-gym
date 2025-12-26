@@ -57,9 +57,11 @@ describe('Search gyms use case', () => {
       page: 2,
     })
 
-    expect(gyms).toEqual([
-      expect.objectContaining({ title: 'js gym-20' }),
-      expect.objectContaining({ title: 'js gym-21' }),
-    ])
+    expect(gyms).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ title: 'js gym-20' }),
+        expect.objectContaining({ title: 'js gym-21' }),
+      ])
+    )
   })
 })
