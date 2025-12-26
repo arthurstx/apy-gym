@@ -1,6 +1,7 @@
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { app } from '../../../app.js'
+import { createAndAuthenticateUser } from '../../../utils/test/create-and-authenticate-user.js'
 
 describe('Fetch nearby gyms (e2e)', () => {
   beforeAll(async () => {
@@ -12,21 +13,7 @@ describe('Fetch nearby gyms (e2e)', () => {
   })
 
   it('should be able to fetch nearby gyms', async () => {
-    const email = 'email11@example.com'
-    const password = '123456'
-
-    await request(app.server).post('/register').send({
-      name: 'nome',
-      email,
-      password,
-    })
-
-    const authResponse = await request(app.server).post('/authenticate').send({
-      email,
-      password,
-    })
-
-    const { token } = authResponse.body
+    const { token } = await createAndAuthenticateUser(app)
 
     await request(app.server)
       .post('/create-gyms')
@@ -57,10 +44,6 @@ describe('Fetch nearby gyms (e2e)', () => {
         latitude: 0,
         longitude: 0,
       })
-
-    console.log('====console====')
-    console.log(response.body.gyms)
-
     expect(response.statusCode).toEqual(200)
     expect(response.body.gyms).toHaveLength(2)
     expect(response.body.gyms).toEqual(
