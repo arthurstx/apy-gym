@@ -6,7 +6,7 @@ import { nearbyGyms } from './nearby-gyms.js'
 
 export async function gymRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
-  app.post('/create-gyms', CreateGyms)
-  app.post('/search-gyms', searchGyms)
-  app.post('/nearby-gyms', nearbyGyms)
+  app.post('/gyms/create', CreateGyms)
+  app.get('/gyms/search', searchGyms)
+  app.get('/gyms/nearby', nearbyGyms)
 }
