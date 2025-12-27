@@ -11,7 +11,6 @@ export async function createCheckIn(
   })
 
   const createCheckInBodySchema = z.object({
-    gymId: z.string(),
     latitude: z.number().refine((value) => {
       return Math.abs(value) <= 90
     }),
@@ -26,12 +25,12 @@ export async function createCheckIn(
 
   const gymsUseCase = makeCheckInUseCase()
 
-  await gymsUseCase.execute({
+  const { checkIn } = await gymsUseCase.execute({
     userId: request.user.sub,
     gymId,
     userLatitude: latitude,
     userLongitude: longitude,
   })
 
-  return reply.status(201).send()
+  return reply.status(201).send({ checkIn })
 }

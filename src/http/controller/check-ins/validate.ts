@@ -4,7 +4,7 @@ import { makeValidateCheckInUseCase } from '../../../services/factories/make-val
 
 export async function validate(request: FastifyRequest, reply: FastifyReply) {
   const validateCheckInBodySchema = z.object({
-    checkInId: z.string(),
+    checkInId: z.uuid(),
   })
 
   const { checkInId } = validateCheckInBodySchema.parse(request.params)

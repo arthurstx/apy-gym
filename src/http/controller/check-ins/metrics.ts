@@ -4,9 +4,9 @@ import { makeGetUserMetricsUseCase } from '../../../services/factories/make-get-
 export async function metrics(request: FastifyRequest, reply: FastifyReply) {
   const gymsUseCase = makeGetUserMetricsUseCase()
 
-  await gymsUseCase.execute({
+  const { checkInsCount } = await gymsUseCase.execute({
     userId: request.user.sub,
   })
 
-  return reply.status(200).send()
+  return reply.status(200).send({ checkInsCount })
 }
