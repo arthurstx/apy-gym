@@ -13,7 +13,7 @@ describe('Fetch nearby gyms (e2e)', () => {
   })
 
   it('should be able to fetch nearby gyms', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     await request(app.server)
       .post('/gyms')
@@ -45,8 +45,6 @@ describe('Fetch nearby gyms (e2e)', () => {
         longitude: 0,
       })
       .send()
-
-
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.gyms).toHaveLength(2)
